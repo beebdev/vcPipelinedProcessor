@@ -1,3 +1,9 @@
+-----------------------------------------------------------------------
+--  COMP3211 Computer Architecture 20T1                              --
+--  Final Project: Real-time Vote Counting System                    --
+--  Student: Po Jui Shih (z5187581)                                  --
+-----------------------------------------------------------------------
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
