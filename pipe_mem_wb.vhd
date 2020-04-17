@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity pipe_ex_mem is
+entity pipe_mem_wb is
     Port ( reset                    : in  STD_LOGIC;
            clk                      : in  STD_LOGIC;
            EXMEM_reg_write          : in  STD_LOGIC;
@@ -16,9 +16,9 @@ entity pipe_ex_mem is
            MEMWB_alu_data           : out STD_LOGIC_VECTOR(15 downto 0);
            MEMWB_receive_data       : out STD_LOGIC_VECTOR(15 downto 0);
            MEMWB_reg_dst            : out STD_LOGIC_VECTOR(3 downto 0) );
-end pipe_ex_mem;
+end pipe_mem_wb;
 
-architecture Behavioral of pipe_ex_mem is
+architecture Behavioral of pipe_mem_wb is
 begin
 
     process (reset, clk)

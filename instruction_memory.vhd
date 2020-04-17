@@ -4,9 +4,9 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity instruction_memory is
-    Port ( reset    : in STD_LOGIC;
-           clk      : in STD_LOGIC;
-           addr_in  : in STD_LOGIC_VECTOR (7 downto 0);
+    Port ( reset    : in  STD_LOGIC;
+           clk      : in  STD_LOGIC;
+           addr_in  : in  STD_LOGIC_VECTOR (7 downto 0);
            insn_out : out STD_LOGIC_VECTOR (15 downto 0));
 end instruction_memory;
 

@@ -4,13 +4,13 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity register_file is
-    Port ( reset            : in STD_LOGIC;
-           clk              : in STD_LOGIC;
-           read_register_a  : in STD_LOGIC_VECTOR (3 downto 0);
-           read_register_b  : in STD_LOGIC_VECTOR (3 downto 0);
-           write_enable     : in STD_LOGIC;
-           write_register   : in STD_LOGIC_VECTOR (3 downto 0);
-           write_data       : in STD_LOGIC_VECTOR (15 downto 0);
+    Port ( reset            : in  STD_LOGIC;
+           clk              : in  STD_LOGIC;
+           read_register_a  : in  STD_LOGIC_VECTOR (3 downto 0);
+           read_register_b  : in  STD_LOGIC_VECTOR (3 downto 0);
+           write_enable     : in  STD_LOGIC;
+           write_register   : in  STD_LOGIC_VECTOR (3 downto 0);
+           write_data       : in  STD_LOGIC_VECTOR (15 downto 0);
            read_data_a      : out STD_LOGIC_VECTOR (15 downto 0);
            read_data_b      : out STD_LOGIC_VECTOR (15 downto 0));
 end register_file;

@@ -3,9 +3,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 
 entity alu is
-    Port ( data_a   : in STD_LOGIC_VECTOR (15 downto 0);
-           data_b   : in STD_LOGIC_VECTOR (15 downto 0);
-           alu_op   : in STD_LOGIC_VECTOR (2 downto 0);
+    Port ( data_a   : in  STD_LOGIC_VECTOR (15 downto 0);
+           data_b   : in  STD_LOGIC_VECTOR (15 downto 0);
+           alu_op   : in  STD_LOGIC_VECTOR (2 downto 0);
            result   : out STD_LOGIC_VECTOR (15 downto 0) );
 end alu;
 

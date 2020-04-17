@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity control_unit is
-    Port ( opcode       : in STD_LOGIC_VECTOR (3 downto 0);
+    Port ( opcode       : in  STD_LOGIC_VECTOR (3 downto 0);
            reg_write    : out STD_LOGIC;
            mem_to_reg   : out STD_LOGIC_VECTOR(1 downto 0);
            mem_read     : out STD_LOGIC;
