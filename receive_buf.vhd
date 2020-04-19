@@ -10,7 +10,6 @@ entity receive_buf is
 end receive_buf;
 
 architecture Behavioral of receive_buf is
-    -- more that one slot?
 begin
     process (reset, clk)
     begin
