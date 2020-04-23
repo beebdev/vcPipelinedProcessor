@@ -28,7 +28,7 @@ architecture Behavioral of data_memory is
     type mem_block is array(0 to 7) of mem_line;
     
     -- stalling states
-    type state_t is (st_start, st_stall, st_done);
+    type state_t is (st_normal, st_stall);
     signal state, next_state : state_t;
     signal sig_stall_count : integer;
     
@@ -39,7 +39,7 @@ begin
     state_reg : process (reset, clk)
     begin
         if (reset = '1') then
-            state <= st_start;
+            state <= st_normal;
         elsif (falling_edge(clk)) then
             state <= next_state;
         end if;
@@ -50,20 +50,18 @@ begin
     next_s_logic : process (state, read, write, sig_stall_count)
     begin
         case state is
-            when st_start =>
+            when st_normal =>
                 if (read = '1' or write = '1') then
                     next_state <= st_stall;
                 else
-                    next_state <= st_start;
+                    next_state <= st_normal;
                 end if;
             when st_stall =>
-                if (sig_stall_count /= 0) then
-                    next_state <= st_done;
+                if (sig_stall_count = 0) then
+                    next_state <= st_normal;
                 else
                     next_state <= st_stall;
                 end if;
-            when st_done =>
-                next_state <= state;
         end case;
     end process;
     -------------------------------------------------------------
@@ -73,14 +71,15 @@ begin
     begin
         mem_done <= '0';
         case state is
-            when st_start =>
+            when st_normal =>
                 sig_stall_count <= conv_integer(unsigned(penalty)) - 1;
             when st_stall =>
                 if (falling_edge(clk)) then
                     sig_stall_count <= sig_stall_count - 1;
                 end if;
-            when st_done =>
-                mem_done <= '1';
+                if (sig_stall_count = 0) then
+                    mem_done <= '1';
+                end if;
         end case;
     end process;
     -------------------------------------------------------------

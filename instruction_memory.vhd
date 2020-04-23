@@ -36,20 +36,20 @@ begin
             var_insn_mem(6)   := X"6106";   -- lc   $6, $1
             var_insn_mem(7)   := X"3565";   -- sub  $5, $5, $6
             var_insn_mem(8)   := X"2525";   -- add  $5, $5, $2
-            var_insn_mem(9)   := X"7153";   -- st   $1, $5, $3
-            var_insn_mem(10)  := X"8123";   -- sc   $1, $2, $3
+            var_insn_mem(9)   := X"7154";   -- st   $1, $5, $3
+            var_insn_mem(10)  := X"8124";   -- sc   $1, $2, $3
             var_insn_mem(11)  := X"0000";
             var_insn_mem(12)  := X"0000";
             var_insn_mem(13)  := X"0000";
             var_insn_mem(14)  := X"0000";
             var_insn_mem(15)  := X"0000";
-        elsif (falling_edge(clk)) then
+        elsif (rising_edge(clk)) then
             -- read instructions on the rising clock edge
             var_addr := conv_integer(addr_in);
             if (done = '1') then
                 insn_out <= X"0000";
             else
-                insn_out <= var_insn_mem(var_addr mod 10);
+                insn_out <= var_insn_mem(var_addr mod 11);
             end if;
         end if;
 

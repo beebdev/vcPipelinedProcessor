@@ -14,7 +14,8 @@ entity pipe_id_ex is
            reg_write        : in  STD_LOGIC;
            mem_to_reg       : in  STD_LOGIC_VECTOR(1 downto 0);
            mem_read         : in  STD_LOGIC;
-           mem_write         : in  STD_LOGIC;
+           mem_write        : in  STD_LOGIC;
+           total            : in  STD_LOGIC;
            alu_op           : in  STD_LOGIC_VECTOR(1 downto 0);
            read_data_a      : in  STD_LOGIC_VECTOR(15 downto 0);
            read_data_b      : in  STD_LOGIC_VECTOR(15 downto 0);
@@ -26,6 +27,7 @@ entity pipe_id_ex is
            IDEX_mem_to_reg  : out STD_LOGIC_VECTOR(1 downto 0);
            IDEX_mem_read    : out STD_LOGIC;
            IDEX_mem_write   : out STD_LOGIC;
+           IDEX_total       : out STD_LOGIC;
            IDEX_alu_op      : out STD_LOGIC_VECTOR(1 downto 0);
            IDEX_read_data_a : out STD_LOGIC_VECTOR(15 downto 0);
            IDEX_read_data_b : out STD_LOGIC_VECTOR(15 downto 0);
@@ -44,6 +46,7 @@ begin
             IDEX_mem_to_reg <= (others => '0');
             IDEX_mem_read <= '0';
             IDEX_mem_write <= '0';
+            IDEX_total <= '0';
             IDEX_alu_op <= (others => '0');
             IDEX_read_data_a <= (others => '0');
             IDEX_read_data_b <= (others => '0');
@@ -58,12 +61,14 @@ begin
                 IDEX_mem_to_reg <= (others => '0');
                 IDEX_mem_read <= '0';
                 IDEX_mem_write <= '0';
+                IDEX_total <= '0';
                 IDEX_alu_op <= (others => '0');
             else
                 IDEX_reg_write <= reg_write;
                 IDEX_mem_to_reg <= mem_to_reg;
                 IDEX_mem_read <= mem_read;
                 IDEX_mem_write <= mem_write;
+                IDEX_total <= total;
                 IDEX_alu_op <= alu_op;
             end if;
             

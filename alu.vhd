@@ -34,9 +34,13 @@ begin
                 result <= result_t(15 downto 0);
             when ALU_OP_CAD =>
                 result_t <= ('0'&data_a) + ('0'&data_b);
-                if (result_t(16) = '1') then
-                    result <= result_t(15 downto 0) + 1;
-                end if;
+--                if (result_t(16) = '1') then
+--                    result <= result_t(15 downto 0) + 1;
+--                else
+                    result <= result_t(15 downto 0);
+--                end if;
+            when others =>
+                result <= (others => '0');
         end case;
     end process;
 	

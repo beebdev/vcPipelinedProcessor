@@ -1,3 +1,9 @@
+-----------------------------------------------------------------------
+--  COMP3211 Computer Architecture 20T1                              --
+--  Final Project: Real-time Vote Counting System                    --
+--  Student: Po Jui Shih (z5187581)                                  --
+-----------------------------------------------------------------------
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -9,7 +15,7 @@ entity pipe_mem_wb is
            cache_dout               : in  STD_LOGIC_VECTOR(15 downto 0);
            EXMEM_alu_data           : in  STD_LOGIC_VECTOR(15 downto 0);
            EXMEM_receive_data       : in  STD_LOGIC_VECTOR(15 downto 0);
-           EXMEM_reg_dst            : in  STD_LOGIC_VECTOR(15 downto 0);
+           EXMEM_reg_dst            : in  STD_LOGIC_VECTOR(3 downto 0);
            MEMWB_reg_write          : out STD_LOGIC;
            MEMWB_mem_to_reg         : out STD_LOGIC_VECTOR(1 downto 0);
            MEMWB_cache_dout         : out STD_LOGIC_VECTOR(15 downto 0);

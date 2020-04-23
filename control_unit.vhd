@@ -13,6 +13,7 @@ entity control_unit is
            mem_to_reg   : out STD_LOGIC_VECTOR(1 downto 0);
            mem_read     : out STD_LOGIC;
            mem_write    : out STD_LOGIC;
+           total        : out STD_LOGIC;
            alu_op       : out STD_LOGIC_VECTOR(1 downto 0) );
 end control_unit;
 
@@ -49,6 +50,10 @@ begin
 
     mem_write   <= '1' when (opcode = OP_ST)
                          or (opcode = OP_SC) else
+                   '0';
+
+    total       <= '1' when (opcode = OP_ST)
+                         or (opcode = OP_LT) else
                    '0';
 
     alu_op      <= "00" when (opcode = OP_ADD) else

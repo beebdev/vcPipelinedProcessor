@@ -15,6 +15,7 @@ entity cache_controller is
            valid        : in  STD_LOGIC;
            read         : in  STD_LOGIC;
            write        : in  STD_LOGIC;
+           total        : in  STD_LOGIC;
            address      : in  STD_LOGIC_VECTOR(15 downto 0);
            din          : in  STD_LOGIC_VECTOR(15 downto 0);
            m_done       : in  STD_LOGIC;
@@ -34,8 +35,9 @@ architecture Behavioral of cache_controller is
     type state_t is (st_idle, st_ctag, st_wb, st_allocate);
     signal state, next_state : state_t;
 
-    signal sig_address, sig_data : STD_LOGIC_VECTOR(15 downto 0);
-    signal sig_D, sig_V, sig_T : STD_LOGIC;
+    signal sig_address, sig_data : STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+    signal sig_D, sig_V, sig_T : STD_LOGIC := '0';
+    signal sig_hit : STD_LOGIC := '0';
     
 begin
     -----------state register-----------------------------------------
@@ -51,7 +53,7 @@ begin
     
     ------------next state logic--------------------------------------
     next_state_logic : process (state, read, write, valid,
-                                sig_hit, sig_D, m_done)
+                                sig_hit, sig_D, sig_V, m_done)
     begin
         case state is
             when st_idle =>
@@ -61,7 +63,7 @@ begin
                     next_state <= st_idle;
                 end if;
             when st_ctag =>
-                if (sig_hit = '1') then
+                if (sig_V = '1' and sig_hit = '1') then
                     next_state <= st_idle;
                 else
                     if (sig_D = '1') then
@@ -87,7 +89,9 @@ begin
     ------------------------------------------------------------------
 
     ------------state output------------------------------------------
-    state_output_p : process (state, write, sig_hit)
+    state_output_p : process (reset, clk, state,
+                              total, address, din, write,
+                              sig_address, sig_V, sig_hit)
         variable var_cache_prefix : cache_prefix;
         variable var_index : integer;
     begin
@@ -114,9 +118,15 @@ begin
             -- Update on cases
             case state is
                 when st_idle =>
-                    -- Update stored address and data 
+                    -- Update stored address and data
+                    if (total = '1') then
+                        sig_address <= "00001111"&address(7 downto 0);
+                    else
+                        sig_address <= address;
+                    end if;
+--                    cache_done <= '1';
                     sig_address <= address;
-                    sig_data <= data;
+                    sig_data <= din;
                 when st_ctag =>
                     -- Update sig_hit
                     if (var_cache_prefix(var_index)(2) = sig_address(2)) then
@@ -126,7 +136,7 @@ begin
                     end if;
 
                     -- Valid and hit
-                    if (V = '1' and sig_hit = '1') then
+                    if (sig_V = '1' and sig_hit = '1') then
                         -- Set cache_done and valid
                         cache_done <= '1';
                         var_cache_prefix(var_index)(1) := '1';
@@ -141,6 +151,7 @@ begin
                     m_write <= '1';
                 when st_allocate =>
                     m_read <= '1';
+                    c_w_line <= '1';
                     -- Set not dirty
                     var_cache_prefix(var_index)(0) := '0';
                     -- Set valid
@@ -148,7 +159,11 @@ begin
                     -- Set tag
                     var_cache_prefix(var_index)(2) := sig_address(2);
             end case;
-        end if
+        end if;
+        sig_cache_prefix <= var_cache_prefix;
+    end process;
     ------------------------------------------------------------------
+    address_o <= sig_address;
+    c_din <= sig_data;
     
 end Behavioral;

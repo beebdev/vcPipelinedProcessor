@@ -1,3 +1,9 @@
+-----------------------------------------------------------------------
+--  COMP3211 Computer Architecture 20T1                              --
+--  Final Project: Real-time Vote Counting System                    --
+--  Student: Po Jui Shih (z5187581)                                  --
+-----------------------------------------------------------------------
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -34,9 +40,9 @@ begin
     hcu_state_reg : process (reset, clk)
     begin
         if (reset = '1') then
-            next_state <= st_normal;
+            state <= st_normal;
         elsif (rising_edge(clk)) then
-            next_state <= state;
+            state <= next_state;
         end if;
     end process;
 
@@ -64,8 +70,12 @@ begin
         case state is
             when st_normal =>
                 stall <= '0';
+                pc_write <= '1';
+                IFID_write <= '1';
             when st_stall =>
                 stall <= '1';
+                pc_write <= '0';
+                IFID_write <= '0';
         end case;
     end process;
 
